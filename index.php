@@ -1,0 +1,555 @@
+<?php
+require_once __DIR__ . '/api/projects.php';
+$portfolioProjects = getProjectsList();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKAAR STUDIO — Modern Landing Pages That Convert</title>
+    <meta name="description" content="We design and build modern, responsive landing pages for businesses, creators and startups that want to make a stronger first impression online.">
+    <meta name="author" content="AKAAR Studio">
+
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="AKAAR STUDIO — Modern Landing Pages That Convert">
+    <meta property="og:description" content="We design and build modern, responsive landing pages for businesses, creators and startups.">
+    <meta property="og:image" content="assets/images/hero_preview.png">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon SVG -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2312141D'/><path d='M50 18L18 82H36L50 51L64 82H82L50 18Z' fill='%236366F1'/><path d='M34 60H66' stroke='%2338BDF8' stroke-width='7' stroke-linecap='round'/></svg>">
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+         NAVBAR
+         ========================================================================== -->
+    <header class="navbar-wrapper">
+        <div class="container navbar-inner">
+            <a href="#" class="brand-logo" aria-label="AKAAR Studio Homepage">
+                <div class="brand-mark">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L3 20H8.5L12 12.5L15.5 20H21L12 3Z" fill="url(#akaar-logo-head)"/>
+                        <path d="M8.5 15.5H15.5" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="akaar-logo-head" x1="3" y1="3" x2="21" y2="20" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#6366F1"/>
+                                <stop offset="0.5" stop-color="#818CF8"/>
+                                <stop offset="1" stop-color="#38BDF8"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span>AKAAR STUDIO</span>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#work" class="nav-link">Work</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#process" class="nav-link">Process</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="admin/index.php" class="nav-link" style="color: var(--accent-cyan); font-weight: 600;">Admin</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-cta">
+                <a href="#contact" class="btn btn-primary">
+                    <span>Let's Talk</span>
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+
+            <button class="mobile-nav-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <ul class="mobile-drawer-links">
+            <li><a href="#work" class="mobile-drawer-link">Work</a></li>
+            <li><a href="#services" class="mobile-drawer-link">Services</a></li>
+            <li><a href="#process" class="mobile-drawer-link">Process</a></li>
+            <li><a href="#about" class="mobile-drawer-link">About</a></li>
+            <li><a href="admin/index.php" class="mobile-drawer-link" style="color: var(--accent-cyan); font-weight: 600;">Admin Gateway</a></li>
+        </ul>
+        <a href="#contact" class="btn btn-primary mobile-drawer-cta">
+            <span>Start a Project</span>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </div>
+
+    <!-- ==========================================================================
+         HERO SECTION
+         ========================================================================== -->
+    <section class="hero-section">
+        <div class="hero-glow"></div>
+        <div class="container">
+            <div class="hero-content reveal-on-scroll">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span>Design · Development · Launch</span>
+                </div>
+
+                <h1 class="hero-headline">
+                    Landing pages that turn <br>
+                    <span class="text-gradient">attention into action.</span>
+                </h1>
+
+                <p class="hero-subtext">
+                    We design and build modern, responsive landing pages for businesses, creators and startups that want to make a stronger first impression online.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">
+                        <span>Start a Project</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#work" class="btn btn-secondary">
+                        <span>See Our Work</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Visual Browser Mockup -->
+            <div class="hero-visual-container reveal-on-scroll">
+                <div class="floating-tag floating-tag-left">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>99+ Lighthouse Speed</span>
+                </div>
+
+                <div class="floating-tag floating-tag-right">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Conversion-Optimized</span>
+                </div>
+
+                <div class="hero-visual-frame">
+                    <div class="browser-bar">
+                        <div class="browser-dots">
+                            <span class="browser-dot red"></span>
+                            <span class="browser-dot yellow"></span>
+                            <span class="browser-dot green"></span>
+                        </div>
+                        <div class="browser-url-pill">https://akaarstudio.com/preview</div>
+                    </div>
+                    <div class="hero-img-wrap">
+                        <img src="assets/images/hero_preview.png" alt="AKAAR Studio Landing Page Preview Showcase" loading="eager">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         SELECTED WORK
+         ========================================================================== -->
+    <section id="work" class="section-padding">
+        <div class="container">
+            <div class="reveal-on-scroll">
+                <span class="section-label">Portfolio</span>
+                <h2 class="section-title">Selected Work</h2>
+                <p class="section-subtitle">
+                    A few concepts built to explore different industries, styles and conversion goals.
+                </p>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <?php foreach ($portfolioProjects as $p): ?>
+                <article class="project-card reveal-on-scroll">
+                    <div class="project-img-box">
+                        <span class="concept-badge">Portfolio Project</span>
+                        <img src="<?php echo htmlspecialchars($p['image_url']); ?>" alt="<?php echo htmlspecialchars($p['title']); ?>" loading="lazy" onerror="this.src='assets/images/hero_preview.png'">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-meta">
+                            <span class="project-industry"><?php echo htmlspecialchars($p['industry']); ?></span>
+                        </div>
+                        <h3 class="project-title"><?php echo htmlspecialchars($p['title']); ?></h3>
+                        <p class="project-desc">
+                            <?php echo htmlspecialchars($p['overview']); ?>
+                        </p>
+                        <div class="project-tech-tags">
+                            <?php foreach ($p['tech_tags'] as $tech): ?>
+                                <span class="tech-tag"><?php echo htmlspecialchars($tech); ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="project-footer">
+                            <button class="btn-card-action" data-project-trigger="<?php echo htmlspecialchars($p['slug']); ?>">
+                                <span>View Project Details</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         WHAT WE BUILD
+         ========================================================================== -->
+    <section id="services" class="section-padding" style="background: rgba(18, 20, 29, 0.3);">
+        <div class="container">
+            <div class="reveal-on-scroll">
+                <span class="section-label">Capabilities</span>
+                <h2 class="section-title">Built for the first impression.</h2>
+                <p class="section-subtitle">
+                    We focus on one thing: creating landing pages that communicate your value clearly and guide visitors toward action.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card reveal-on-scroll">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    </div>
+                    <h3 class="service-title">Landing Pages</h3>
+                    <p class="service-desc">
+                        Focused single-page web experiences designed around one clear objective, eliminating friction and maximizing conversions.
+                    </p>
+                </div>
+
+                <div class="service-card reveal-on-scroll">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    </div>
+                    <h3 class="service-title">Responsive Design</h3>
+                    <p class="service-desc">
+                        Flawlessly tailored layouts that look crisp and feel natural across desktop monitors, laptops, tablets, and smartphones.
+                    </p>
+                </div>
+
+                <div class="service-card reveal-on-scroll">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <h3 class="service-title">Fast Performance</h3>
+                    <p class="service-desc">
+                        Lightweight vanilla implementation without framework bloat, delivering fast load times and clean scorecards.
+                    </p>
+                </div>
+
+                <div class="service-card reveal-on-scroll">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3 class="service-title">Conversion Focus</h3>
+                    <p class="service-desc">
+                        Clear visual hierarchy, strategic messaging, and compelling calls-to-action designed around the user journey.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         WHY LANDING PAGES
+         ========================================================================== -->
+    <section class="section-padding why-section">
+        <div class="container">
+            <div class="why-editorial reveal-on-scroll">
+                <span class="section-label">The Strategy</span>
+                <blockquote class="why-quote">
+                    "Your website has seconds to make an impression."
+                </blockquote>
+                <p class="why-subcopy">
+                    Good landing pages don't just look good. They tell visitors what you offer, why it matters and what they should do next.
+                </p>
+
+                <div class="journey-flow">
+                    <div class="journey-step">
+                        <span>01. Attention</span>
+                    </div>
+                    <span class="journey-arrow">→</span>
+
+                    <div class="journey-step">
+                        <span>02. Interest</span>
+                    </div>
+                    <span class="journey-arrow">→</span>
+
+                    <div class="journey-step">
+                        <span>03. Trust</span>
+                    </div>
+                    <span class="journey-arrow">→</span>
+
+                    <div class="journey-step" style="border-color: var(--accent-primary); background: var(--accent-light);">
+                        <span class="text-gradient">04. Action</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         PROCESS SECTION
+         ========================================================================== -->
+    <section id="process" class="section-padding">
+        <div class="container">
+            <div class="reveal-on-scroll">
+                <span class="section-label">How We Work</span>
+                <h2 class="section-title">From idea to live website.</h2>
+                <p class="section-subtitle">
+                    A streamlined four-step workflow built to move fast without sacrificing detail.
+                </p>
+            </div>
+
+            <div class="process-timeline">
+                <div class="process-step-card reveal-on-scroll">
+                    <div class="process-number">01</div>
+                    <h3 class="process-title">Discover</h3>
+                    <p class="process-desc">
+                        Understand the business, target audience, competitive landscape, and primary conversion goal.
+                    </p>
+                </div>
+
+                <div class="process-step-card reveal-on-scroll">
+                    <div class="process-number">02</div>
+                    <h3 class="process-title">Structure</h3>
+                    <p class="process-desc">
+                        Plan the content hierarchy, messaging flow, visual direction, and call-to-action placement.
+                    </p>
+                </div>
+
+                <div class="process-step-card reveal-on-scroll">
+                    <div class="process-number">03</div>
+                    <h3 class="process-title">Build</h3>
+                    <p class="process-desc">
+                        Develop the responsive landing page using clean, standard HTML5, CSS3, and JavaScript code.
+                    </p>
+                </div>
+
+                <div class="process-step-card reveal-on-scroll">
+                    <div class="process-number">04</div>
+                    <h3 class="process-title">Launch</h3>
+                    <p class="process-desc">
+                        Cross-device testing, performance optimization, SEO verification, and live deployment.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         ABOUT US SECTION
+         ========================================================================== -->
+    <section id="about" class="section-padding" style="background: rgba(18, 20, 29, 0.3);">
+        <div class="container">
+            <div class="reveal-on-scroll">
+                <span class="section-label">Who We Are</span>
+                <h2 class="section-title">A small team. A lot of attention to detail.</h2>
+                <p class="section-subtitle">
+                    We're Varun and Sudarshan, a two-person freelance web studio focused on building clean, modern landing pages for businesses and ideas that deserve a better online presence.
+                </p>
+            </div>
+
+            <div class="team-grid">
+                <!-- Varun -->
+                <div class="team-card reveal-on-scroll">
+                    <div class="team-header">
+                        <div class="team-avatar">V</div>
+                        <div>
+                            <h3 class="team-name">Varun</h3>
+                            <span class="team-role">Frontend Development</span>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.6;">
+                        Focuses on clean code structure, performance tuning, responsive breakpoints, and ensuring every interactive element works smoothly across browsers.
+                    </p>
+                    <div class="team-focus-list">
+                        <span class="team-focus-pill">HTML5</span>
+                        <span class="team-focus-pill">CSS3</span>
+                        <span class="team-focus-pill">JavaScript</span>
+                        <span class="team-focus-pill">Responsive Web</span>
+                    </div>
+                </div>
+
+                <!-- Sudarshan -->
+                <div class="team-card reveal-on-scroll">
+                    <div class="team-header">
+                        <div class="team-avatar">S</div>
+                        <div>
+                            <h3 class="team-name">Sudarshan</h3>
+                            <span class="team-role">Design & Development</span>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.6;">
+                        Focuses on visual layout, typography hierarchy, UI micro-interactions, and blending design aesthetics with frontend implementation.
+                    </p>
+                    <div class="team-focus-list">
+                        <span class="team-focus-pill">Visual Design</span>
+                        <span class="team-focus-pill">UI/UX Layout</span>
+                        <span class="team-focus-pill">Frontend Dev</span>
+                        <span class="team-focus-pill">PHP & MySQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         FINAL CTA & CONTACT FORM
+         ========================================================================== -->
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="cta-section-box reveal-on-scroll">
+                <div class="cta-grid">
+                    <div>
+                        <span class="section-label">Get In Touch</span>
+                        <h2 class="cta-headline">Have an idea worth putting online?</h2>
+                        <p class="cta-subcopy">
+                            Let's build the page that gives it the attention it deserves. Send us a message and we'll reply within 24 hours.
+                        </p>
+
+                        <div style="margin-top: 2rem;">
+                            <span style="display: block; font-size: 0.8125rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">Or email us directly</span>
+                            <a href="mailto:atahwalevarun779@gmail.com?subject=Project%20Inquiry%20-%20AKAAR%20Studio" class="cta-direct-email">
+                                <span>atahwalevarun779@gmail.com</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div>
+                        <form id="contactForm" class="contact-form" novalidate>
+                            <div class="form-group">
+                                <label for="name" class="form-label">Your Name</label>
+                                <input type="text" id="name" name="name" class="form-input" placeholder="e.g. Sarah Jenkins" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="sarah@example.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="project_type" class="form-label">Project Type</label>
+                                <select id="project_type" name="project_type" class="form-select" required>
+                                    <option value="" disabled selected>Select what you need help with...</option>
+                                    <option value="Landing Page">Landing Page</option>
+                                    <option value="Business Website">Business Website</option>
+                                    <option value="Product Launch">Product Launch</option>
+                                    <option value="Website Redesign">Website Redesign</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" class="form-label">Project Details</label>
+                                <textarea id="message" name="message" class="form-textarea" placeholder="Tell us a bit about your business and goals..." required></textarea>
+                            </div>
+
+                            <div id="formStatus" class="form-status"></div>
+
+                            <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                                <span>Start a Project</span>
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         PROJECT DETAILS MODAL
+         ========================================================================== -->
+    <div class="modal-overlay" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content-box">
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">&times;</button>
+            
+            <span class="project-industry" id="modalIndustry">Category</span>
+            <h2 class="section-title" id="modalTitle" style="font-size: 2rem; margin-top: 0.3rem;">Project Title</h2>
+
+            <img src="" alt="" id="modalImg" class="modal-body-img">
+
+            <div style="margin-bottom: 1.5rem;">
+                <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Overview</h4>
+                <p id="modalDesc" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;"></p>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Key Conversion Features</h4>
+                <ul id="modalHighlights" style="list-style: none; padding-left: 0;"></ul>
+            </div>
+
+            <div>
+                <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Technologies Used</h4>
+                <div id="modalTech" class="project-tech-tags"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         FOOTER
+         ========================================================================== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <a href="#" class="brand-logo" aria-label="AKAAR Studio Homepage">
+                        <div class="brand-mark">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 3L3 20H8.5L12 12.5L15.5 20H21L12 3Z" fill="url(#akaar-logo-foot)"/>
+                                <path d="M8.5 15.5H15.5" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+                                <defs>
+                                    <linearGradient id="akaar-logo-foot" x1="3" y1="3" x2="21" y2="20" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#6366F1"/>
+                                        <stop offset="0.5" stop-color="#818CF8"/>
+                                        <stop offset="1" stop-color="#38BDF8"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <span>AKAAR STUDIO</span>
+                    </a>
+                    <p class="footer-brand-desc">
+                        A modern freelance web studio crafting high-converting landing pages for ambitious businesses and startups.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="footer-col-title">Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#work" class="footer-link">Selected Work</a></li>
+                        <li><a href="#services" class="footer-link">Services</a></li>
+                        <li><a href="#process" class="footer-link">Our Process</a></li>
+                        <li><a href="#about" class="footer-link">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-col-title">Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:atahwalevarun779@gmail.com?subject=Project%20Inquiry%20-%20AKAAR%20Studio" class="footer-link">atahwalevarun779@gmail.com</a></li>
+                        <li><a href="#" class="footer-link" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="#" class="footer-link" target="_blank" rel="noopener">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 AKAAR Studio. All rights reserved.</p>
+                <p>Designed & Built by Varun & Sudarshan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.INITIAL_PROJECTS = <?php echo json_encode($portfolioProjects); ?>;
+    </script>
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
