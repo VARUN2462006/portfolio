@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProcessHighlight();
   initProjectModals();
   initContactForm();
+  initAdminNotice();
 });
 
 /* --------------------------------------------------------------------------
@@ -127,6 +128,7 @@ function initScrollReveal() {
   // Trigger immediate visibility check for hash links and on-screen elements
   revealAllVisible();
   window.addEventListener('scroll', revealAllVisible, { passive: true });
+  window.addEventListener('touchmove', revealAllVisible, { passive: true });
   window.addEventListener('hashchange', () => setTimeout(revealAllVisible, 50));
   setTimeout(revealAllVisible, 100);
   setTimeout(revealAllVisible, 400);
@@ -146,7 +148,7 @@ function initProcessHighlight() {
       }
     });
   }, {
-    threshold: 0.5
+    threshold: 0.3
   });
 
   processCards.forEach(card => observer.observe(card));
@@ -178,11 +180,13 @@ function initProjectModals() {
     } else {
       try {
         const res = await fetch('api/projects.php');
-        const data = await res.json();
-        if (data.success && Array.isArray(data.projects)) {
-          data.projects.forEach(p => {
-            dynamicProjectsMap[p.slug] = p;
-          });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.projects)) {
+            data.projects.forEach(p => {
+              dynamicProjectsMap[p.slug] = p;
+            });
+          }
         }
       } catch (err) {
         console.error('Error fetching project data for modal:', err);
@@ -240,21 +244,8 @@ function initProjectModals() {
   });
 }
 
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
-      closeModal();
-    }
-  });
-}
-
 /* --------------------------------------------------------------------------
-   6. Contact Form AJAX Submission
+   6. Contact Form AJAX & Static Mailto Submission
    -------------------------------------------------------------------------- */
 function initContactForm() {
   const form = document.getElementById('contactForm');
@@ -299,6 +290,8 @@ function initContactForm() {
     const originalBtnText = submitBtn.innerHTML;
     submitBtn.innerHTML = `<span>Sending Message...</span>`;
 
+    let submittedViaApi = false;
+
     try {
       const response = await fetch('api/contact.php', {
         method: 'POST',
@@ -314,23 +307,43 @@ function initContactForm() {
         })
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        showStatus(data.message, 'success');
-        form.reset();
-      } else {
-        const errorMsg = data.message || 'An error occurred while submitting. Please try again.';
-        showStatus(errorMsg, 'error');
+      const contentType = response.headers.get('content-type');
+      if (response.ok && contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        if (data.success) {
+          showStatus(data.message || 'Thank you! Your message has been sent successfully.', 'success');
+          form.reset();
+          submittedViaApi = true;
+        } else {
+          showStatus(data.message || 'An error occurred while submitting. Please try again.', 'error');
+          submittedViaApi = true;
+        }
       }
     } catch (err) {
-      console.error('Submission error:', err);
-      showStatus('Network error. Please check your connection or contact atahwalevarun779@gmail.com directly.', 'error');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
+      console.log('PHP API endpoint unavailable. Falling back to direct email handler.', err);
     }
+
+    if (!submittedViaApi) {
+      // Fallback for GitHub Pages static hosting
+      triggerMailtoFallback(name, email, projectType, message);
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
   });
+
+  function triggerMailtoFallback(name, email, projectType, message) {
+    const subject = encodeURIComponent(`[AKAAR Inquiry] ${projectType} - ${name}`);
+    const body = encodeURIComponent(`Hello AKAAR Studio,\n\nName: ${name}\nEmail: ${email}\nProject Type: ${projectType}\n\nProject Details:\n${message}\n\nSent via AKAAR Studio Portfolio`);
+    const mailtoUrl = `mailto:atahwalevarun779@gmail.com?subject=${subject}&body=${body}`;
+
+    showStatus(`Thank you ${name}! Opening your email app to send your inquiry directly to atahwalevarun779@gmail.com...`, 'success');
+    form.reset();
+
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+    }, 600);
+  }
 
   function showStatus(msg, type) {
     statusBox.textContent = msg;
@@ -338,3 +351,20 @@ function initContactForm() {
     statusBox.style.display = 'block';
   }
 }
+
+/* --------------------------------------------------------------------------
+   7. Admin Link Notice for Static Hosting (GitHub Pages)
+   -------------------------------------------------------------------------- */
+function initAdminNotice() {
+  const isStaticHost = window.location.hostname.includes('github.io') || window.location.protocol === 'file:';
+
+  if (isStaticHost) {
+    document.querySelectorAll('a[href*="admin/index.php"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Notice: The Admin Gateway is designed to run on a PHP backend server (such as local XAMPP or PHP web hosting).\n\nYou are currently viewing the static site hosted on GitHub Pages.');
+      });
+    });
+  }
+}
+

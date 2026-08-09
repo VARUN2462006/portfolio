@@ -384,10 +384,12 @@ h1, h2, h3, h4 {
   z-index: 999;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 2.5rem;
-  padding: 2rem;
+  gap: 2rem;
+  padding: 5.5rem 1.5rem 2.5rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
@@ -619,6 +621,35 @@ h1, h2, h3, h4 {
 @keyframes floatBounce {
   0% { transform: translateY(0); }
   100% { transform: translateY(-10px); }
+}
+
+/* Mobile Badge Container for Hero Mockup */
+.hero-mobile-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-mobile-badges {
+    display: none;
+  }
+}
+
+.hero-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(18, 20, 29, 0.85);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 /* --- Selected Work Section --- */
@@ -897,12 +928,19 @@ h1, h2, h3, h4 {
 .journey-arrow {
   color: var(--accent-primary);
   font-weight: 700;
-  display: none;
+  font-size: 1.25rem;
+  display: inline-block;
+}
+
+@media (max-width: 767px) {
+  .journey-arrow::after {
+    content: '↓';
+  }
 }
 
 @media (min-width: 768px) {
-  .journey-arrow {
-    display: inline-block;
+  .journey-arrow::after {
+    content: '→';
   }
 }
 
@@ -1119,7 +1157,7 @@ h1, h2, h3, h4 {
   padding: 0.875rem 1.1rem;
   color: var(--text-primary);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: 1rem; /* 16px prevents iOS Safari auto-zoom on focus */
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -1190,9 +1228,33 @@ h1, h2, h3, h4 {
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 2.5rem;
   position: relative;
   box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 600px) {
+  .modal-overlay {
+    padding: 0.75rem;
+  }
+  .modal-content-box {
+    padding: 1.5rem 1.15rem;
+    border-radius: var(--radius-lg);
+    max-height: 92vh;
+  }
+  .modal-close-btn {
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Touch Device Active Tap Feedback */
+.btn:active, .btn-card-action:active, .mobile-drawer-link:active {
+  transform: scale(0.97);
 }
 
 .modal-close-btn {
