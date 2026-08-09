@@ -490,6 +490,8 @@ $portfolioProjects = getProjectsList();
                 <p id="modalDesc" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;"></p>
             </div>
 
+            <div id="modalInteractiveContainer"></div>
+
             <div style="margin-bottom: 1.5rem;">
                 <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Key Conversion Features</h4>
                 <ul id="modalHighlights" style="list-style: none; padding-left: 0;"></ul>
@@ -561,6 +563,6 @@ $portfolioProjects = getProjectsList();
         window.INITIAL_PROJECTS = <?php echo json_encode($portfolioProjects); ?>;
     </script>
     <!-- Main JS -->
-    <script src="assets/js/main.js?v=3.0"></script>
+    <script src="assets/js/main.js?v=4.0"></script>
 </body>
 </html>
