@@ -195,11 +195,11 @@
     </div>
 
     <script>
-        const initialProjects = [
-            { id: 1, slug: 'aurelia', title: 'Aurelia', industry: 'E-Commerce / Skincare', image_url: '../assets/images/project_aurelia.png', tech_tags: ['HTML5', 'CSS3 Custom Variables', 'Vanilla JS'], highlights: ['Editorial visual layout', 'Interactive hotspots'] },
-            { id: 2, slug: 'forge', title: 'Forge', industry: 'Health & Fitness', image_url: '../assets/images/project_forge.png', tech_tags: ['HTML5', 'CSS Flexbox & Grid', 'JavaScript UI'], highlights: ['Schedule preview widget', 'High-contrast dark mode'] },
-            { id: 3, slug: 'nexa', title: 'Nexa', industry: 'B2B Software / SaaS', image_url: '../assets/images/project_nexa.png', tech_tags: ['HTML5', 'CSS3 Systems', 'Vanilla JavaScript'], highlights: ['Metrics preview table', 'Free-trial signup CTA'] },
-            { id: 4, slug: 'casa', title: 'Casa', industry: 'Luxury Real Estate', image_url: '../assets/images/project_casa.png', tech_tags: ['HTML5', 'CSS Grid & Flex', 'JavaScript Lightbox'], highlights: ['Full-width architectural gallery', 'Tour booking trigger'] }
+        const DEFAULT_PROJECTS = [
+            { id: 1, slug: 'aurelia', title: 'Aurelia', industry: 'E-Commerce / Skincare', image_url: 'assets/images/project_aurelia.png', overview: 'A high-end landing page created for a luxury botanical skincare line. Designed to evoke calm, elegance, and uncompromised quality.', highlights: ['Editorial visual layout showcasing natural ingredients', 'Interactive product ingredient hotspot explorer', 'Clean conversion funnel targeting high-LTV customers', 'Subtle glassmorphic cards and warm neutral tones'], tech_tags: ['HTML5', 'CSS3 Custom Variables', 'Vanilla JS', 'PHP Contact Endpoint'], order_num: 1 },
+            { id: 2, slug: 'forge', title: 'Forge', industry: 'Health & Fitness', image_url: 'assets/images/project_forge.png', overview: 'An aggressive, conversion-optimized landing page designed for a boutique gym & elite athletic coaching platform.', highlights: ['Dynamic workout schedule preview widget', 'High-contrast dark mode aesthetic with electric accents', 'Interactive membership plan estimator', 'Zero layout shift, 99+ Lighthouse performance baseline'], tech_tags: ['HTML5', 'CSS Flexbox & Grid', 'JavaScript UI Controls'], order_num: 2 },
+            { id: 3, slug: 'nexa', title: 'Nexa', industry: 'B2B Software / SaaS', image_url: 'assets/images/project_nexa.png', overview: 'A sleek, conversion-oriented product showcase designed for an enterprise AI analytics application.', highlights: ['Interactive metrics preview and feature comparison table', 'Clear call-to-action hierarchy for free-trial signups', 'Responsive metric dashboard preview mockup', 'Optimized load times under 0.8 seconds'], tech_tags: ['HTML5', 'CSS3 Systems', 'Vanilla JavaScript', 'MySQL Data Capture'], order_num: 3 },
+            { id: 4, slug: 'casa', title: 'Casa', industry: 'Luxury Real Estate', image_url: 'assets/images/project_casa.png', overview: 'A minimalist, spacious landing page designed for prime luxury residential properties and architectural tours.', highlights: ['Full-width high-resolution architectural photo galleries', 'Direct private tour booking inquiry trigger', 'Subtle micro-interactions on scroll and hover', 'Accessible semantic markup for global buyers'], tech_tags: ['HTML5', 'CSS Grid & Flex', 'JavaScript Lightbox'], order_num: 4 }
         ];
 
         const initialInquiries = [
@@ -207,11 +207,26 @@
             { name: 'David Miller', email: 'david.m@techcorp.io', project_type: 'Business Website', message: 'Need a complete modern website redesign for our SaaS product launch.', created_at: 'Yesterday' }
         ];
 
-        // Wipe legacy persistent login state so authentication is fresh
+        // Wipe legacy persistent login state
         localStorage.removeItem('akaar_admin_logged_in');
 
-        // Session authentication state (resets when browser window/tab is closed)
+        // Session-only login state
         let isAdminLoggedIn = sessionStorage.getItem('akaar_admin_logged_in') === 'true';
+
+        // Load project list from localStorage or fallback
+        function getSavedProjects() {
+            const raw = localStorage.getItem('akaar_portfolio_projects');
+            if (raw) {
+                try {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                } catch (e) {}
+            }
+            localStorage.setItem('akaar_portfolio_projects', JSON.stringify(DEFAULT_PROJECTS));
+            return [...DEFAULT_PROJECTS];
+        }
+
+        let currentProjects = getSavedProjects();
 
         function renderAdminState() {
             const loginWrap = document.getElementById('loginWrapper');
@@ -224,20 +239,26 @@
             } else {
                 loginWrap.style.display = 'flex';
                 dashWrap.style.display = 'none';
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
             }
         }
 
         document.getElementById('staticLoginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const alertBox = document.getElementById('loginAlert');
-            const userVal = document.getElementById('username').value.trim();
-            const passVal = document.getElementById('password').value.trim();
+            const userInput = document.getElementById('username');
+            const passInput = document.getElementById('password');
+            const userVal = userInput.value.trim();
+            const passVal = passInput.value.trim();
 
-            // STRICT CREDENTIAL CHECK: Only varun / 1008 authorized
+            // STRICT AUTHENTICATION ENFORCEMENT: ONLY username "varun" & password "1008"
             if (userVal.toLowerCase() === 'varun' && passVal === '1008') {
                 alertBox.className = 'alert-message alert-success';
-                alertBox.textContent = 'Access Granted! Loading Dashboard...';
+                alertBox.textContent = 'Access Granted! Welcome Varun. Loading Dashboard...';
                 alertBox.style.display = 'block';
+                userInput.style.borderColor = '';
+                passInput.style.borderColor = '';
 
                 setTimeout(() => {
                     alertBox.style.display = 'none';
@@ -247,8 +268,10 @@
                 }, 300);
             } else {
                 alertBox.className = 'alert-message alert-error';
-                alertBox.textContent = 'Access Denied! Incorrect username or password. (Only username "varun" with password "1008" is authorized).';
+                alertBox.textContent = 'Access Denied! Incorrect Username or Password. Only Username: "varun" & Password: "1008" are authorized.';
                 alertBox.style.display = 'block';
+                userInput.style.borderColor = 'var(--danger)';
+                passInput.style.borderColor = 'var(--danger)';
             }
         });
 
@@ -261,34 +284,44 @@
 
         function renderProjects() {
             const tbody = document.getElementById('projectsTableBody');
-            document.getElementById('statProjectCount').textContent = initialProjects.length;
-            tbody.innerHTML = initialProjects.map(p => `
-                <tr>
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <img src="${p.image_url}" class="proj-thumb" alt="${p.title}">
-                            <div>
-                                <strong style="display: block; color: var(--text-main); font-size: 0.95rem;">${p.title}</strong>
-                                <span style="font-size: 0.78rem; color: var(--text-dim);">${p.slug}</span>
+            document.getElementById('statProjectCount').textContent = currentProjects.length;
+            tbody.innerHTML = currentProjects.map(p => {
+                const imgSrc = p.image_url.startsWith('http') || p.image_url.startsWith('/') || p.image_url.startsWith('assets')
+                    ? '../' + p.image_url
+                    : '../assets/images/' + p.image_url;
+
+                const techTags = Array.isArray(p.tech_tags) ? p.tech_tags : [];
+                const highlights = Array.isArray(p.highlights) ? p.highlights : [];
+
+                return `
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="${imgSrc}" class="proj-thumb" alt="${p.title}" onerror="this.src='../assets/images/hero_preview.png'">
+                                <div>
+                                    <strong style="display: block; color: var(--text-main); font-size: 0.95rem;">${p.title}</strong>
+                                    <span style="font-size: 0.78rem; color: var(--text-dim);">${p.slug}</span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td><span class="badge-tag" style="background: rgba(99,102,241,0.15); color: var(--accent-cyan);">${p.industry}</span></td>
-                    <td>${p.tech_tags.map(t => `<span class="badge-tag">${t}</span>`).join('')}</td>
-                    <td style="color: var(--text-muted); font-size: 0.85rem;">${p.highlights.length} key highlights</td>
-                    <td>
-                        <button class="btn-icon-action btn-delete" onclick="removeProj(${p.id})">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+                        </td>
+                        <td><span class="badge-tag" style="background: rgba(99,102,241,0.15); color: var(--accent-cyan);">${p.industry}</span></td>
+                        <td>${techTags.map(t => `<span class="badge-tag">${t}</span>`).join('')}</td>
+                        <td style="color: var(--text-muted); font-size: 0.85rem;">${highlights.length} key highlights</td>
+                        <td>
+                            <button class="btn-icon-action btn-delete" title="Delete Project" onclick="removeProj(${p.id})">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function removeProj(id) {
-            const idx = initialProjects.findIndex(p => p.id === id);
+            const idx = currentProjects.findIndex(p => p.id === id);
             if (idx !== -1) {
-                initialProjects.splice(idx, 1);
+                currentProjects.splice(idx, 1);
+                localStorage.setItem('akaar_portfolio_projects', JSON.stringify(currentProjects));
                 renderProjects();
             }
         }
@@ -317,28 +350,61 @@
         document.getElementById('openAddModalBtn').addEventListener('click', () => modal.classList.add('active'));
         document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('active'));
 
-        document.getElementById('addProjectForm').addEventListener('submit', (e) => {
+        document.getElementById('addProjectForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('pTitle').value.trim();
             const industry = document.getElementById('pIndustry').value.trim();
             const overview = document.getElementById('pOverview').value.trim();
-            const tech = document.getElementById('pTech').value.split(',').map(s => s.trim());
-            const img = document.getElementById('pImage').value.trim();
+            const techRaw = document.getElementById('pTech').value.trim();
+            const imgRaw = document.getElementById('pImage').value.trim();
 
-            if (title && industry) {
-                initialProjects.push({
-                    id: Date.now(),
-                    slug: title.toLowerCase().replace(/\s+/g, '-'),
-                    title: title,
-                    industry: industry,
-                    image_url: img || '../assets/images/hero_preview.png',
-                    tech_tags: tech,
-                    highlights: [overview]
+            if (!title || !industry) return;
+
+            const techTagsArr = techRaw ? techRaw.split(',').map(s => s.trim()).filter(Boolean) : ['HTML5', 'CSS3', 'JavaScript'];
+            const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            const finalImg = imgRaw || 'assets/images/hero_preview.png';
+
+            const newProject = {
+                id: Date.now(),
+                slug: slug,
+                title: title,
+                industry: industry,
+                image_url: finalImg,
+                overview: overview || 'High-converting landing page created for ' + industry + '.',
+                highlights: [
+                    overview || 'Conversion-optimized user interface',
+                    'Responsive mobile and desktop layout',
+                    'Fast performance baseline'
+                ],
+                tech_tags: techTagsArr,
+                order_num: currentProjects.length + 1
+            };
+
+            currentProjects.push(newProject);
+            localStorage.setItem('akaar_portfolio_projects', JSON.stringify(currentProjects));
+
+            // Also send POST request to PHP API if backend server is active
+            try {
+                await fetch('../api/admin_projects.php?action=create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: title,
+                        industry: industry,
+                        overview: overview,
+                        tech_tags: techTagsArr,
+                        highlights: newProject.highlights,
+                        image_url: finalImg
+                    })
                 });
-                modal.classList.remove('active');
-                renderProjects();
-                document.getElementById('addProjectForm').reset();
+            } catch (err) {
+                console.log('Static host mode: project saved locally in portfolio state.');
             }
+
+            modal.classList.remove('active');
+            renderProjects();
+            document.getElementById('addProjectForm').reset();
+            alert(`Project "${title}" successfully added and published to portfolio!`);
         });
 
         renderAdminState();

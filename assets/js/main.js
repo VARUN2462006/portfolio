@@ -171,27 +171,23 @@ function initProjectModals() {
 
   if (!modal) return;
 
-  // Load project map from API or window global
-  const loadProjectsData = async () => {
-    if (window.INITIAL_PROJECTS) {
-      window.INITIAL_PROJECTS.forEach(p => {
-        dynamicProjectsMap[p.slug] = p;
-      });
-    } else {
-      try {
-        const res = await fetch('api/projects.php');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.success && Array.isArray(data.projects)) {
-            data.projects.forEach(p => {
-              dynamicProjectsMap[p.slug] = p;
-            });
-          }
-        }
-      } catch (err) {
-        console.error('Error fetching project data for modal:', err);
-      }
+  // Load project map from localStorage, window global or API
+  const loadProjectsData = () => {
+    let projectsList = [];
+    const saved = localStorage.getItem('akaar_portfolio_projects');
+    if (saved) {
+      try { projectsList = JSON.parse(saved); } catch(e){}
     }
+    if (!Array.isArray(projectsList) || projectsList.length === 0) {
+      projectsList = window.INITIAL_PROJECTS || [];
+    }
+
+    dynamicProjectsMap = {};
+    projectsList.forEach(p => {
+      dynamicProjectsMap[p.slug] = p;
+    });
+
+    renderDynamicHomepageProjects(projectsList);
   };
 
   loadProjectsData();
@@ -353,8 +349,55 @@ function initContactForm() {
 }
 
 /* --------------------------------------------------------------------------
-   7. Admin Link Navigation Handler
+   7. Dynamic Homepage Projects Grid Rendering
    -------------------------------------------------------------------------- */
+function renderDynamicHomepageProjects(projectsList) {
+  const grid = document.getElementById('projectsGrid');
+  if (!grid || !Array.isArray(projectsList) || projectsList.length === 0) return;
+
+  grid.innerHTML = projectsList.map(p => {
+    const techTags = Array.isArray(p.tech_tags) ? p.tech_tags : [];
+    const techHtml = techTags.map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('');
+    const imgSrc = p.image_url.startsWith('http') || p.image_url.startsWith('/') || p.image_url.startsWith('assets')
+      ? p.image_url
+      : 'assets/images/' + p.image_url;
+
+    return `
+      <article class="project-card reveal-on-scroll revealed">
+        <div class="project-img-box">
+          <span class="concept-badge">Portfolio Project</span>
+          <img src="${imgSrc}" alt="${escapeHtml(p.title)}" loading="lazy" onerror="this.src='assets/images/hero_preview.png'">
+        </div>
+        <div class="project-info">
+          <div class="project-meta">
+            <span class="project-industry">${escapeHtml(p.industry)}</span>
+          </div>
+          <h3 class="project-title">${escapeHtml(p.title)}</h3>
+          <p class="project-desc">${escapeHtml(p.overview || '')}</p>
+          <div class="project-tech-tags">
+            ${techHtml}
+          </div>
+          <div class="project-footer">
+            <button class="btn-card-action" data-project-trigger="${escapeHtml(p.slug)}">
+              <span>View Project Details</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function initAdminNotice() {
   // Navigation to admin/ is automatically resolved to admin/index.html on GitHub Pages / static hosts,
   // and admin/index.php on local PHP servers.

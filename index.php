@@ -561,6 +561,6 @@ $portfolioProjects = getProjectsList();
         window.INITIAL_PROJECTS = <?php echo json_encode($portfolioProjects); ?>;
     </script>
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js?v=3.0"></script>
 </body>
 </html>
