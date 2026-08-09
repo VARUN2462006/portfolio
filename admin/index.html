@@ -25,12 +25,12 @@
             <form id="staticLoginForm" autocomplete="off">
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" name="username" class="form-input" placeholder="e.g. admin" required autofocus value="admin">
+                    <input type="text" id="username" name="username" class="form-input" placeholder="Enter username..." required autofocus>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 1.75rem;">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-input" placeholder="e.g. admin123" required value="admin123">
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Enter password..." required>
                 </div>
 
                 <button type="submit" class="btn-primary-admin">
@@ -226,9 +226,26 @@
 
         document.getElementById('staticLoginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            isAdminLoggedIn = true;
-            localStorage.setItem('akaar_admin_logged_in', 'true');
-            renderAdminState();
+            const alertBox = document.getElementById('loginAlert');
+            const userVal = document.getElementById('username').value.trim();
+            const passVal = document.getElementById('password').value.trim();
+
+            if (userVal.toLowerCase() === 'varun' && passVal === '1008') {
+                alertBox.className = 'alert-message alert-success';
+                alertBox.textContent = 'Access Granted! Loading Dashboard...';
+                alertBox.style.display = 'block';
+
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                    isAdminLoggedIn = true;
+                    localStorage.setItem('akaar_admin_logged_in', 'true');
+                    renderAdminState();
+                }, 300);
+            } else {
+                alertBox.className = 'alert-message alert-error';
+                alertBox.textContent = 'Invalid credentials. Only username "varun" with password "1008" is authorized.';
+                alertBox.style.display = 'block';
+            }
         });
 
         document.getElementById('staticLogoutBtn').addEventListener('click', () => {
