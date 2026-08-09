@@ -97,7 +97,7 @@ if ($action === 'list') {
 }
 
 // --- 2. ADD NEW PROJECT ---
-if ($action === 'add') {
+if ($action === 'add' || $action === 'create') {
     $title = isset($_POST['title']) ? trim($_POST['title']) : '';
     $industry = isset($_POST['industry']) ? trim($_POST['industry']) : '';
     $overview = isset($_POST['overview']) ? trim($_POST['overview']) : '';

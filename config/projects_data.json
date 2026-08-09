@@ -3,8 +3,8 @@
         "id": 1,
         "slug": "aurelia",
         "title": "Aurelia",
-        "industry": "E-Commerce \/ Skincare",
-        "image_url": "assets\/images\/project_aurelia.png",
+        "industry": "E-Commerce / Skincare",
+        "image_url": "assets/images/project_aurelia.png",
         "overview": "A high-end landing page created for a luxury botanical skincare line. Designed to evoke calm, elegance, and uncompromised quality.",
         "highlights": [
             "Editorial visual layout showcasing natural ingredients",
@@ -25,7 +25,7 @@
         "slug": "forge",
         "title": "Forge",
         "industry": "Health & Fitness",
-        "image_url": "assets\/images\/project_forge.png",
+        "image_url": "assets/images/project_forge.png",
         "overview": "An aggressive, conversion-optimized landing page designed for a boutique gym & elite athletic coaching platform.",
         "highlights": [
             "Dynamic workout schedule preview widget",
@@ -44,8 +44,8 @@
         "id": 3,
         "slug": "nexa",
         "title": "Nexa",
-        "industry": "B2B Software \/ SaaS",
-        "image_url": "assets\/images\/project_nexa.png",
+        "industry": "B2B Software / SaaS",
+        "image_url": "assets/images/project_nexa.png",
         "overview": "A sleek, conversion-oriented product showcase designed for an enterprise AI analytics application.",
         "highlights": [
             "Interactive metrics preview and feature comparison table",
@@ -66,7 +66,7 @@
         "slug": "casa",
         "title": "Casa",
         "industry": "Luxury Real Estate",
-        "image_url": "assets\/images\/project_casa.png",
+        "image_url": "assets/images/project_casa.png",
         "overview": "A minimalist, spacious landing page designed for prime luxury residential properties and architectural tours.",
         "highlights": [
             "Full-width high-resolution architectural photo galleries",
@@ -80,5 +80,26 @@
             "JavaScript Lightbox"
         ],
         "order_num": 4
+    },
+    {
+        "id": 5,
+        "slug": "weather-forecast",
+        "title": "Weather Forecast App",
+        "industry": "Web Application / Weather API",
+        "image_url": "assets/images/project_weather.png",
+        "overview": "A real-time, interactive weather forecast application featuring dynamic city search, live climate telemetry, °C / °F temperature toggling, and 5-day daily forecasts.",
+        "highlights": [
+            "Live real-time city search & climate telemetry rendering",
+            "Interactive °C / °F temperature unit toggling",
+            "Animated weather condition vectors (Sun, Rain, Clouds, Thunderstorm)",
+            "5-Day forecast cards with humidity, wind speed, and UV index stats"
+        ],
+        "tech_tags": [
+            "HTML5",
+            "CSS3 Glassmorphism",
+            "Vanilla JavaScript",
+            "OpenWeather Engine"
+        ],
+        "order_num": 5
     }
 ]
