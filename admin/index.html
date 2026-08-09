@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — AKAAR STUDIO</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2312141D'/><path d='M50 18L18 82H36L50 51L64 82H82L50 18Z' fill='%236366F1'/><path d='M34 60H66' stroke='%2338BDF8' stroke-width='7' stroke-linecap='round'/></svg>">
+</head>
+<body>
+
+    <!-- ==========================================================================
+         LOGIN SCREEN (UNAUTHENTICATED)
+         ========================================================================== -->
+    <div class="login-wrapper" id="loginWrapper">
+        <div class="login-card">
+            <div class="login-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h1 class="login-title">Admin Access</h1>
+            <p class="login-sub">Protected Portal • Enter credentials to manage AKAAR Studio portfolio.</p>
+
+            <div id="loginAlert" class="alert-message"></div>
+
+            <form id="staticLoginForm" autocomplete="off">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="e.g. admin" required autofocus value="admin">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.75rem;">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="e.g. admin123" required value="admin123">
+                </div>
+
+                <button type="submit" class="btn-primary-admin">
+                    <span>Login to Dashboard</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </form>
+
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <a href="../" style="color: var(--accent-cyan); font-size: 0.85rem; text-decoration: none;">← Return to Main Website</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         AUTHENTICATED ADMIN DASHBOARD
+         ========================================================================== -->
+    <div class="admin-container" id="dashboardContainer" style="display: none;">
+        <!-- Top Navbar -->
+        <header class="admin-header">
+            <a href="../" class="brand-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3L3 20H8.5L12 12.5L15.5 20H21L12 3Z" fill="url(#akaar-admin-logo)"/>
+                    <path d="M8.5 15.5H15.5" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="akaar-admin-logo" x1="3" y1="3" x2="21" y2="20" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#6366F1"/>
+                            <stop offset="1" stop-color="#38BDF8"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>AKAAR STUDIO</span>
+                <span class="brand-badge">Admin</span>
+            </a>
+
+            <div class="header-actions">
+                <a href="../" class="btn-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    <span>View Site</span>
+                </a>
+                <button id="staticLogoutBtn" class="btn-header btn-logout">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <div>
+                    <div id="statProjectCount" class="stat-val">4</div>
+                    <div class="stat-label">Active Portfolio Projects</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(56, 189, 248, 0.12); color: var(--accent-cyan);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                    <div id="statInquiryCount" class="stat-val">12</div>
+                    <div class="stat-label">Total Inquiries Received</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.12); color: var(--success);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div>
+                    <div class="stat-val" style="color: var(--success);">99+</div>
+                    <div class="stat-label">Lighthouse Speed Baseline</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Projects Management -->
+        <div class="section-header">
+            <h2 class="section-heading">Portfolio Projects</h2>
+            <button id="openAddModalBtn" class="btn-header" style="background: var(--accent); color: #FFF; border: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>Add New Project</span>
+            </button>
+        </div>
+
+        <div class="projects-table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        <th>Industry</th>
+                        <th>Technologies</th>
+                        <th>Highlights</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="projectsTableBody">
+                    <!-- Populated dynamically by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Client Inquiries Log -->
+        <div class="section-header">
+            <h2 class="section-heading">Client Inquiries</h2>
+        </div>
+
+        <div class="projects-table-wrap">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Email</th>
+                        <th>Project Type</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="inquiriesTableBody">
+                    <!-- Populated dynamically by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Project -->
+    <div class="modal-admin-overlay" id="addProjectModal">
+        <div class="modal-admin-card">
+            <div class="modal-header">
+                <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Add New Portfolio Project</h3>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="addProjectForm">
+                <div class="form-group">
+                    <label class="form-label">Project Title</label>
+                    <input type="text" id="pTitle" class="form-input" placeholder="e.g. Lumina App" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Industry / Category</label>
+                    <input type="text" id="pIndustry" class="form-input" placeholder="e.g. SaaS / AI Tools" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Overview Description</label>
+                    <textarea id="pOverview" class="form-textarea" placeholder="Brief project summary..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tech Tags (comma separated)</label>
+                    <input type="text" id="pTech" class="form-input" placeholder="HTML5, CSS3, Vanilla JS" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Image Path / URL</label>
+                    <input type="text" id="pImage" class="form-input" value="assets/images/hero_preview.png" required>
+                </div>
+                <button type="submit" class="btn-primary-admin" style="margin-top: 1rem;">Save Project</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const initialProjects = [
+            { id: 1, slug: 'aurelia', title: 'Aurelia', industry: 'E-Commerce / Skincare', image_url: '../assets/images/project_aurelia.png', tech_tags: ['HTML5', 'CSS3 Custom Variables', 'Vanilla JS'], highlights: ['Editorial visual layout', 'Interactive hotspots'] },
+            { id: 2, slug: 'forge', title: 'Forge', industry: 'Health & Fitness', image_url: '../assets/images/project_forge.png', tech_tags: ['HTML5', 'CSS Flexbox & Grid', 'JavaScript UI'], highlights: ['Schedule preview widget', 'High-contrast dark mode'] },
+            { id: 3, slug: 'nexa', title: 'Nexa', industry: 'B2B Software / SaaS', image_url: '../assets/images/project_nexa.png', tech_tags: ['HTML5', 'CSS3 Systems', 'Vanilla JavaScript'], highlights: ['Metrics preview table', 'Free-trial signup CTA'] },
+            { id: 4, slug: 'casa', title: 'Casa', industry: 'Luxury Real Estate', image_url: '../assets/images/project_casa.png', tech_tags: ['HTML5', 'CSS Grid & Flex', 'JavaScript Lightbox'], highlights: ['Full-width architectural gallery', 'Tour booking trigger'] }
+        ];
+
+        const initialInquiries = [
+            { name: 'Sarah Jenkins', email: 'sarah@example.com', project_type: 'Landing Page', message: 'Looking for a clean high-converting page for my skincare startup.', created_at: 'Today, 2:45 PM' },
+            { name: 'David Miller', email: 'david.m@techcorp.io', project_type: 'Business Website', message: 'Need a complete modern website redesign for our SaaS product launch.', created_at: 'Yesterday' }
+        ];
+
+        // State check
+        let isAdminLoggedIn = localStorage.getItem('akaar_admin_logged_in') === 'true';
+
+        function renderAdminState() {
+            const loginWrap = document.getElementById('loginWrapper');
+            const dashWrap = document.getElementById('dashboardContainer');
+            if (isAdminLoggedIn) {
+                loginWrap.style.display = 'none';
+                dashWrap.style.display = 'block';
+                renderProjects();
+                renderInquiries();
+            } else {
+                loginWrap.style.display = 'flex';
+                dashWrap.style.display = 'none';
+            }
+        }
+
+        document.getElementById('staticLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            isAdminLoggedIn = true;
+            localStorage.setItem('akaar_admin_logged_in', 'true');
+            renderAdminState();
+        });
+
+        document.getElementById('staticLogoutBtn').addEventListener('click', () => {
+            isAdminLoggedIn = false;
+            localStorage.setItem('akaar_admin_logged_in', 'false');
+            renderAdminState();
+        });
+
+        function renderProjects() {
+            const tbody = document.getElementById('projectsTableBody');
+            document.getElementById('statProjectCount').textContent = initialProjects.length;
+            tbody.innerHTML = initialProjects.map(p => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <img src="${p.image_url}" class="proj-thumb" alt="${p.title}">
+                            <div>
+                                <strong style="display: block; color: var(--text-main); font-size: 0.95rem;">${p.title}</strong>
+                                <span style="font-size: 0.78rem; color: var(--text-dim);">${p.slug}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="badge-tag" style="background: rgba(99,102,241,0.15); color: var(--accent-cyan);">${p.industry}</span></td>
+                    <td>${p.tech_tags.map(t => `<span class="badge-tag">${t}</span>`).join('')}</td>
+                    <td style="color: var(--text-muted); font-size: 0.85rem;">${p.highlights.length} key highlights</td>
+                    <td>
+                        <button class="btn-icon-action btn-delete" onclick="removeProj(${p.id})">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function removeProj(id) {
+            const idx = initialProjects.findIndex(p => p.id === id);
+            if (idx !== -1) {
+                initialProjects.splice(idx, 1);
+                renderProjects();
+            }
+        }
+
+        function renderInquiries() {
+            const tbody = document.getElementById('inquiriesTableBody');
+            document.getElementById('statInquiryCount').textContent = initialInquiries.length;
+            tbody.innerHTML = initialInquiries.map(inq => `
+                <tr>
+                    <td><strong>${inq.name}</strong></td>
+                    <td><a href="mailto:${inq.email}" style="color: var(--accent-cyan); text-decoration: none;">${inq.email}</a></td>
+                    <td><span class="badge-tag">${inq.project_type}</span></td>
+                    <td style="max-width: 260px; color: var(--text-muted); font-size: 0.88rem;">${inq.message}</td>
+                    <td style="font-size: 0.8rem; color: var(--text-dim);">${inq.created_at}</td>
+                    <td>
+                        <a href="mailto:${inq.email}?subject=Re:%20${encodeURIComponent(inq.project_type)}%20Inquiry%20-%20AKAAR%20Studio" class="btn-header" style="font-size: 0.78rem; padding: 0.35rem 0.65rem; background: var(--accent); color: #fff; border: none; text-decoration: none;">
+                            Reply
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Modal triggers
+        const modal = document.getElementById('addProjectModal');
+        document.getElementById('openAddModalBtn').addEventListener('click', () => modal.classList.add('active'));
+        document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('active'));
+
+        document.getElementById('addProjectForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('pTitle').value.trim();
+            const industry = document.getElementById('pIndustry').value.trim();
+            const overview = document.getElementById('pOverview').value.trim();
+            const tech = document.getElementById('pTech').value.split(',').map(s => s.trim());
+            const img = document.getElementById('pImage').value.trim();
+
+            if (title && industry) {
+                initialProjects.push({
+                    id: Date.now(),
+                    slug: title.toLowerCase().replace(/\s+/g, '-'),
+                    title: title,
+                    industry: industry,
+                    image_url: img || '../assets/images/hero_preview.png',
+                    tech_tags: tech,
+                    highlights: [overview]
+                });
+                modal.classList.remove('active');
+                renderProjects();
+                document.getElementById('addProjectForm').reset();
+            }
+        });
+
+        renderAdminState();
+    </script>
+</body>
+</html>

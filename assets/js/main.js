@@ -353,18 +353,10 @@ function initContactForm() {
 }
 
 /* --------------------------------------------------------------------------
-   7. Admin Link Notice for Static Hosting (GitHub Pages)
+   7. Admin Link Navigation Handler
    -------------------------------------------------------------------------- */
 function initAdminNotice() {
-  const isStaticHost = window.location.hostname.includes('github.io') || window.location.protocol === 'file:';
-
-  if (isStaticHost) {
-    document.querySelectorAll('a[href*="admin/index.php"]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Notice: The Admin Gateway is designed to run on a PHP backend server (such as local XAMPP or PHP web hosting).\n\nYou are currently viewing the static site hosted on GitHub Pages.');
-      });
-    });
-  }
+  // Navigation to admin/ is automatically resolved to admin/index.html on GitHub Pages / static hosts,
+  // and admin/index.php on local PHP servers.
 }
 

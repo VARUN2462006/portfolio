@@ -53,7 +53,7 @@ $portfolioProjects = getProjectsList();
                     <li><a href="#services" class="nav-link">Services</a></li>
                     <li><a href="#process" class="nav-link">Process</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="admin/index.php" class="nav-link" style="color: var(--accent-cyan); font-weight: 600;">Admin</a></li>
+                    <li><a href="admin/" class="nav-link" style="color: var(--accent-cyan); font-weight: 600;">Admin</a></li>
                 </ul>
             </nav>
 
@@ -79,7 +79,7 @@ $portfolioProjects = getProjectsList();
             <li><a href="#services" class="mobile-drawer-link">Services</a></li>
             <li><a href="#process" class="mobile-drawer-link">Process</a></li>
             <li><a href="#about" class="mobile-drawer-link">About</a></li>
-            <li><a href="admin/index.php" class="mobile-drawer-link" style="color: var(--accent-cyan); font-weight: 600;">Admin Gateway</a></li>
+            <li><a href="admin/" class="mobile-drawer-link" style="color: var(--accent-cyan); font-weight: 600;">Admin Gateway</a></li>
         </ul>
         <a href="#contact" class="btn btn-primary mobile-drawer-cta">
             <span>Start a Project</span>
