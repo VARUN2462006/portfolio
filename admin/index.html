@@ -207,8 +207,11 @@
             { name: 'David Miller', email: 'david.m@techcorp.io', project_type: 'Business Website', message: 'Need a complete modern website redesign for our SaaS product launch.', created_at: 'Yesterday' }
         ];
 
-        // State check
-        let isAdminLoggedIn = localStorage.getItem('akaar_admin_logged_in') === 'true';
+        // Wipe legacy persistent login state so authentication is fresh
+        localStorage.removeItem('akaar_admin_logged_in');
+
+        // Session authentication state (resets when browser window/tab is closed)
+        let isAdminLoggedIn = sessionStorage.getItem('akaar_admin_logged_in') === 'true';
 
         function renderAdminState() {
             const loginWrap = document.getElementById('loginWrapper');
@@ -230,6 +233,7 @@
             const userVal = document.getElementById('username').value.trim();
             const passVal = document.getElementById('password').value.trim();
 
+            // STRICT CREDENTIAL CHECK: Only varun / 1008 authorized
             if (userVal.toLowerCase() === 'varun' && passVal === '1008') {
                 alertBox.className = 'alert-message alert-success';
                 alertBox.textContent = 'Access Granted! Loading Dashboard...';
@@ -238,19 +242,20 @@
                 setTimeout(() => {
                     alertBox.style.display = 'none';
                     isAdminLoggedIn = true;
-                    localStorage.setItem('akaar_admin_logged_in', 'true');
+                    sessionStorage.setItem('akaar_admin_logged_in', 'true');
                     renderAdminState();
                 }, 300);
             } else {
                 alertBox.className = 'alert-message alert-error';
-                alertBox.textContent = 'Invalid credentials. Only username "varun" with password "1008" is authorized.';
+                alertBox.textContent = 'Access Denied! Incorrect username or password. (Only username "varun" with password "1008" is authorized).';
                 alertBox.style.display = 'block';
             }
         });
 
         document.getElementById('staticLogoutBtn').addEventListener('click', () => {
             isAdminLoggedIn = false;
-            localStorage.setItem('akaar_admin_logged_in', 'false');
+            sessionStorage.removeItem('akaar_admin_logged_in');
+            localStorage.removeItem('akaar_admin_logged_in');
             renderAdminState();
         });
 
